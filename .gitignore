@@ -3,3 +3,13 @@
 ################################################################################
 
 /Comma/obj/Debug
+/Comma/bin/Debug
+/Comma/packages
+/Comma/dexDb.sqlite
+/Comma.External/obj/Debug
+/Comma.External/bin/Debug
+/Comma.Repository/bin/Debug
+/Comma.Repository/obj/Debug
+/Comma.UnitTests/bin/Debug
+/Comma.UnitTests/obj/Debug
+/Comma/.vs/Comma/v15

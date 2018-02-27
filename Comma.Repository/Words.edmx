@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Under33_ProdModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Nouns">
+          <Key>
+            <PropertyRef Name="NounID" />
+          </Key>
+          <Property Name="Noun" Type="nvarchar" MaxLength="255" />
+          <Property Name="NounID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DefinitionID" Type="int" />
+        </EntityType>
+        <EntityType Name="NounsDefinitions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="NounDefinition" Type="nvarchar" MaxLength="255" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Verbs">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OriginalID" Type="int" />
+          <Property Name="RawVerb" Type="nvarchar" MaxLength="250" />
+          <Property Name="OriginalVerb" Type="nvarchar" MaxLength="250" />
+          <Property Name="DefinitionID" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Under33_Prod.dbo.VerbsDefintion' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="VerbsDefintion">
+          <Property Name="id" Type="float" />
+          <Property Name="source_id" Type="float" />
+          <Property Name="user_id" Type="float" />
+          <Property Name="definition" Type="nvarchar" MaxLength="1255" />
+        </EntityType>-->
+        <Association Name="FL_JOB">
+          <End Role="NounsDefinitions" Type="Self.NounsDefinitions" Multiplicity="0..1" />
+          <End Role="Nouns" Type="Self.Nouns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NounsDefinitions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Nouns">
+              <PropertyRef Name="DefinitionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Under33_ProdModelStoreContainer">
+          <EntitySet Name="Nouns" EntityType="Self.Nouns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NounsDefinitions" EntityType="Self.NounsDefinitions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Verbs" EntityType="Self.Verbs" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FL_JOB" Association="Self.FL_JOB">
+            <End Role="NounsDefinitions" EntitySet="NounsDefinitions" />
+            <End Role="Nouns" EntitySet="Nouns" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Under33_ProdModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Noun">
+          <Key>
+            <PropertyRef Name="NounID" />
+          </Key>
+          <Property Name="Noun1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="NounID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DefinitionID" Type="Int32" />
+          <NavigationProperty Name="NounsDefinition" Relationship="Self.FL_JOB" FromRole="Nouns" ToRole="NounsDefinitions" />
+        </EntityType>
+        <EntityType Name="NounsDefinition">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="NounDefinition" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Nouns" Relationship="Self.FL_JOB" FromRole="NounsDefinitions" ToRole="Nouns" />
+        </EntityType>
+        <EntityType Name="Verb">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OriginalID" Type="Int32" />
+          <Property Name="RawVerb" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalVerb" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DefinitionID" Type="Int32" />
+        </EntityType>
+        <Association Name="FL_JOB">
+          <End Role="NounsDefinitions" Type="Self.NounsDefinition" Multiplicity="0..1" />
+          <End Role="Nouns" Type="Self.Noun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NounsDefinitions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Nouns">
+              <PropertyRef Name="DefinitionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Under33_ProdEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Nouns" EntityType="Self.Noun" />
+          <EntitySet Name="NounsDefinitions" EntityType="Self.NounsDefinition" />
+          <EntitySet Name="Verbs" EntityType="Self.Verb" />
+          <AssociationSet Name="FL_JOB" Association="Self.FL_JOB">
+            <End Role="NounsDefinitions" EntitySet="NounsDefinitions" />
+            <End Role="Nouns" EntitySet="Nouns" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Under33_ProdModelStoreContainer" CdmEntityContainer="Under33_ProdEntities">
+          <EntitySetMapping Name="Nouns">
+            <EntityTypeMapping TypeName="Under33_ProdModel.Noun">
+              <MappingFragment StoreEntitySet="Nouns">
+                <ScalarProperty Name="Noun1" ColumnName="Noun" />
+                <ScalarProperty Name="NounID" ColumnName="NounID" />
+                <ScalarProperty Name="DefinitionID" ColumnName="DefinitionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NounsDefinitions">
+            <EntityTypeMapping TypeName="Under33_ProdModel.NounsDefinition">
+              <MappingFragment StoreEntitySet="NounsDefinitions">
+                <ScalarProperty Name="NounDefinition" ColumnName="NounDefinition" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Verbs">
+            <EntityTypeMapping TypeName="Under33_ProdModel.Verb">
+              <MappingFragment StoreEntitySet="Verbs">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OriginalID" ColumnName="OriginalID" />
+                <ScalarProperty Name="RawVerb" ColumnName="RawVerb" />
+                <ScalarProperty Name="OriginalVerb" ColumnName="OriginalVerb" />
+                <ScalarProperty Name="DefinitionID" ColumnName="DefinitionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
