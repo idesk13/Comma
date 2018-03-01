@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Data.SQLite;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Windows.Input;
 using Comma.External;
 using Comma.Repository;
 
@@ -41,28 +42,16 @@ namespace Comma
             foreach (var verb in allVerbs)
             {
 
-                    var word = new Word()
-                    {
-                         ID = verb.ID,
-                        Verb = verb.RawVerb,
-                        Original = verb.OriginalVerb
-                    };
+                var word = new Word()
+                {
+                    ID = verb.ID,
+                    Verb = verb.RawVerb,
+                    Original = verb.OriginalVerb
+                };
 
+                list.Add(word);
+            }
 
-
-                    if (!string.IsNullOrEmpty(word.Verb))
-                    {
-                        list.Add(word);
-                        NotemptyVerbs++;
-                    }
-                    else
-                    {
-
-                        emptyVerbs++;
-
-                    }
-                }
-            
 
             var listdd = list.OrderBy(x => x.Verb).Distinct().ToList();
 
@@ -124,7 +113,7 @@ namespace Comma
             };
             _verbRepository.AddIntoContext(verb);
 
-                _verbRepository.Commit();
+            _verbRepository.Commit();
 
         }
 
@@ -205,10 +194,6 @@ namespace Comma
             return dt;
         }
 
-        private void DgWords_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
 
         private void SyncButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
@@ -216,6 +201,13 @@ namespace Comma
             PRocess(customer);
 
             MessageBox.Show($"{customer.Verb} saved into DB");
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Word customer = (Word)DgWords.SelectedItem;
+            Edit editVerb = new Edit(customer.Verb);
+            editVerb.Show();
         }
     }
 

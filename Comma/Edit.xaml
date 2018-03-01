@@ -1,0 +1,23 @@
+﻿<Window x:Class="Comma.Edit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Comma"
+        mc:Ignorable="d"
+        Title="Edit" Height="300" Width="580.244">
+    <Grid Margin="0,0,126.6,0.4">
+        <Label Content="Timpuri verbale&#xD;&#xA;&#xD;&#xA;" HorizontalAlignment="Left" Margin="23,20,0,0" VerticalAlignment="Top" Width="200" Height="28"/>
+        <DataGrid Name="DgWords" AutoGenerateColumns="False" Margin="5,55,75,-1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Timp}" Header="Timp"/>
+                <DataGridTextColumn Binding="{Binding EuComplete}" Header="Eu"/>
+                <DataGridTextColumn Binding="{Binding TuComplete}" Header="Tu"/>
+                <DataGridTextColumn Binding="{Binding EaComplete}" Header="Ea"/>
+                <DataGridTextColumn Binding="{Binding NoiComplete}" Header="Noi"/>
+                <DataGridTextColumn Binding="{Binding VoiComplete}" Header="Voi"/>
+                <DataGridTextColumn Binding="{Binding EleComplete}" Header="Ele"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

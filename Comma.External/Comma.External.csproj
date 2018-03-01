@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="ExternalProcesor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimpVerbal.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

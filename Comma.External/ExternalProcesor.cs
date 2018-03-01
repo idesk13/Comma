@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Windows.Forms;
@@ -18,17 +19,17 @@ namespace Comma.External
             return document;
         }
 
-        public string GetIndicativPrezent(string verb)
+        public List<TimpVerbal> GetIndicativPrezent(string verb)
         {
             var doc = ParseHtml(verb);
-
+            var list = new List<TimpVerbal>();
             var nodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'box_conj')]");
 
             foreach (var node in nodes)
             {
-                var conjName = node.SelectSingleNode(".//b").InnerText;
-
-
+                var timpVerbalNume = node.SelectSingleNode(".//b").InnerText;
+                TimpVerbal timpVerbal= new TimpVerbal(timpVerbalNume);
+                list.Add(timpVerbal);
                 foreach (var conjValue in node.SelectNodes(".//div[contains(@class,'cont_conj')]").ToList())
                 {
                     var pronumNode = conjValue.SelectSingleNode(".//i");
@@ -41,23 +42,47 @@ namespace Comma.External
 
                     var verbz = conjValue.SelectSingleNode("./text()").InnerText;
 
-                    MessageBox.Show("Pronume: " + pronumValue + " Verb: " + verbz);
+                    if (pronumValue.StartsWith("eu"))
+                    {
+                        timpVerbal.Eu = verbz;
+                        timpVerbal.EuPronume = pronumValue;
+                    }
+
+                    if (pronumValue.StartsWith("tu"))
+                    {
+                        timpVerbal.Tu = verbz;
+                        timpVerbal.TuPronume = pronumValue;
+                    }
+
+                    if (pronumValue.StartsWith("el/ea"))
+                    {
+                        timpVerbal.Ea = verbz;
+                        timpVerbal.EaPronume = pronumValue;
+                    }
+
+                    if (pronumValue.StartsWith("noi"))
+                    {
+                        timpVerbal.Noi = verbz;
+                        timpVerbal.NoiPronume = pronumValue;
+                    }
+
+                    if (pronumValue.StartsWith("voi"))
+                    {
+                        timpVerbal.Voi = verbz;
+                        timpVerbal.VoiPronume = pronumValue;
+                    }
+
+                    if (pronumValue.StartsWith("ei/ele"))
+                    {
+                        timpVerbal.Ele = verbz;
+                        timpVerbal.ElePronume = pronumValue;
+                    }
                 }
 
+               
             }
-
-            return string.Empty;
+            return list;
         }
 
-        //static void Main(string[] args)
-        //{
-        //    var doc = ParseHtml();
-
-        //    var nodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'cont_conj')]");
-
-        //    foreach (var node in nodes)
-        //    {
-        //    }
-        //}
     }
 }
