@@ -25,9 +25,9 @@ namespace Comma
             InitializeComponent();
 
             ExternalProcesor externalProcesor = new ExternalProcesor();
-            var timpuri = externalProcesor.GetIndicativPrezent(verb);
+            var timpuri = externalProcesor.TimpVerbalComplet(verb);
             this.DataContext = timpuri;
-            DgWords.ItemsSource = timpuri;
+            DgWords.ItemsSource = timpuri.TimpuriRegulate;
         }
     }
 }

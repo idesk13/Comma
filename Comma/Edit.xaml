@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Comma"
         mc:Ignorable="d"
-        Title="Edit" Height="300" Width="580.244">
-    <Grid Margin="0,0,126.6,0.4">
-        <Label Content="Timpuri verbale&#xD;&#xA;&#xD;&#xA;" HorizontalAlignment="Left" Margin="23,20,0,0" VerticalAlignment="Top" Width="200" Height="28"/>
-        <DataGrid Name="DgWords" AutoGenerateColumns="False" Margin="5,55,75,-1">
+        Title="Edit" Height="371.2" Width="785.044">
+    <Grid Margin="0,0,-178.6,-83.4">
+        <Label HorizontalAlignment="Left" Margin="23,20,0,0" VerticalAlignment="Top" Width="57" Height="28" Content="INFINTIV"/>
+        <DataGrid Name="DgWords" AutoGenerateColumns="False" Margin="0,190,274,-10">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Timp}" Header="Timp"/>
                 <DataGridTextColumn Binding="{Binding EuComplete}" Header="Eu"/>
@@ -19,5 +19,16 @@
                 <DataGridTextColumn Binding="{Binding EleComplete}" Header="Ele"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Label HorizontalAlignment="Left" Margin="106,20,0,0" VerticalAlignment="Top" Width="193" Height="28" Content="{Binding Infinitiv}"/>
+        <Label HorizontalAlignment="Left" Margin="106,53,0,0" VerticalAlignment="Top" Width="193" Height="28" Content="{Binding Participiu}" RenderTransformOrigin="0.705,1.671"/>
+        <Label HorizontalAlignment="Left" Margin="23,53,0,0" VerticalAlignment="Top" Width="57" Height="28" Content="PARTCIIOIU&#xD;&#xA;"/>
+        <Label HorizontalAlignment="Left" Margin="31,84,0,0" VerticalAlignment="Top" Width="57" Height="28" Content="GERUNZIU&#xD;&#xA;&#xA;" RenderTransformOrigin="3.47,-0.786"/>
+        <Label HorizontalAlignment="Left" Margin="31,117,0,0" VerticalAlignment="Top" Width="57" Height="28" Content="INF LUNG&#xA;" RenderTransformOrigin="3.47,-0.786"/>
+        <Label HorizontalAlignment="Left" Margin="117,84,0,0" VerticalAlignment="Top" Width="165" Height="28" Content="{Binding Gerunziu}"/>
+        <Label HorizontalAlignment="Left" Margin="117,117,0,0" VerticalAlignment="Top" Width="211" Height="28" Content="{Binding InfinitivLung}" RenderTransformOrigin="0.705,1.671"/>
+        <Label HorizontalAlignment="Left" Margin="377,20,0,0" VerticalAlignment="Top" Width="57" Height="28" Content="Imp&#xA;&#xA;IMP SING" RenderTransformOrigin="3.47,-0.786"/>
+        <Label HorizontalAlignment="Left" Margin="377,53,0,0" VerticalAlignment="Top" Width="81" Height="28" Content="INF PLURAL&#xA;" RenderTransformOrigin="3.47,-0.786"/>
+        <Label HorizontalAlignment="Left" Margin="463,20,0,0" VerticalAlignment="Top" Width="184" Height="28" Content="{Binding ImperativSingular}"/>
+        <Label HorizontalAlignment="Left" Margin="463,53,0,0" VerticalAlignment="Top" Width="184" Height="28" Content="{Binding ImperativPlural}" RenderTransformOrigin="0.705,1.671"/>
     </Grid>
 </Window>

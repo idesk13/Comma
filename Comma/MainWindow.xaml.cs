@@ -14,9 +14,6 @@ using Comma.Repository;
 
 namespace Comma
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private SQLiteConnection sqlite;
@@ -28,7 +25,7 @@ namespace Comma
             InitializeComponent();
             sqlite = new SQLiteConnection(@"DataSource = C:\Program Files (x86)\Octavian Rasnita\Maestro DEX 3\dexDb.sqlite;Version=3;");
             ExternalProcesor externalProcesor = new ExternalProcesor();
-            externalProcesor.GetIndicativPrezent("scrie");
+            externalProcesor.TimpVerbalComplet("scrie");
             var words = SelectQuery("Select  * from definition where definition like '%#vb.#%'");
             var list = new List<Word>();
             int emptyVerbs = 0;
