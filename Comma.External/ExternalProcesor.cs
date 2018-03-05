@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Windows.Forms;
 using HtmlDocument = HtmlAgilityPack.HtmlDocument;
 
@@ -12,8 +13,11 @@ namespace Comma.External
         private static HtmlDocument ParseHtml(string verb)
         {
             var webClient = new WebClient();
+            webClient.Encoding = Encoding.UTF8;
             var html = webClient.DownloadString("http://conjugare.ro/romana/conjugarea-verbului-" + verb);
+        
             var document = new HtmlDocument();
+ 
             document.LoadHtml(html);
 
             return document;
