@@ -57,6 +57,9 @@
       <DependentUpon>Words.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimpuriVerbale.cs">
+      <DependentUpon>Words.tt</DependentUpon>
+    </Compile>
     <Compile Include="Verb.cs">
       <DependentUpon>Words.tt</DependentUpon>
     </Compile>

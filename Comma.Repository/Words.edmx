@@ -29,15 +29,39 @@
           <Property Name="RawVerb" Type="nvarchar" MaxLength="250" />
           <Property Name="OriginalVerb" Type="nvarchar" MaxLength="250" />
           <Property Name="DefinitionID" Type="int" />
+          <Property Name="Infinitiv" Type="nvarchar" MaxLength="50" />
+          <Property Name="InfinitivLung" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gerunziu" Type="nvarchar" MaxLength="50" />
+          <Property Name="Participiu" Type="nvarchar" MaxLength="50" />
+          <Property Name="ImperativSingular" Type="nvarchar" MaxLength="50" />
+          <Property Name="ImperativPlural" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'Under33_Prod.dbo.VerbsDefintion' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="VerbsDefintion">
-          <Property Name="id" Type="float" />
-          <Property Name="source_id" Type="float" />
-          <Property Name="user_id" Type="float" />
-          <Property Name="definition" Type="nvarchar" MaxLength="1255" />
-        </EntityType>-->
+        <EntityType Name="TimpuriVerbales">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TimpID" Type="int" />
+          <Property Name="Eu" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tu" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ea" Type="nvarchar" MaxLength="50" />
+          <Property Name="Noi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Voi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ele" Type="nvarchar" MaxLength="50" />
+          <Property Name="VerbID" Type="int" />
+        </EntityType>
+        <Association Name="FK_TimpuriVerbales_Verbs">
+          <End Role="Verbs" Type="Self.Verbs" Multiplicity="0..1" />
+          <End Role="TimpuriVerbales" Type="Self.TimpuriVerbales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Verbs">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TimpuriVerbales">
+              <PropertyRef Name="VerbID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FL_JOB">
           <End Role="NounsDefinitions" Type="Self.NounsDefinitions" Multiplicity="0..1" />
           <End Role="Nouns" Type="Self.Nouns" Multiplicity="*" />
@@ -54,6 +78,11 @@ warning 6013: The table/view 'Under33_Prod.dbo.VerbsDefintion' does not have a p
           <EntitySet Name="Nouns" EntityType="Self.Nouns" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NounsDefinitions" EntityType="Self.NounsDefinitions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Verbs" EntityType="Self.Verbs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimpuriVerbales" EntityType="Self.TimpuriVerbales" Schema="kyo_33" store:Type="Tables" />
+          <AssociationSet Name="FK_TimpuriVerbales_Verbs" Association="Self.FK_TimpuriVerbales_Verbs">
+            <End Role="Verbs" EntitySet="Verbs" />
+            <End Role="TimpuriVerbales" EntitySet="TimpuriVerbales" />
+          </AssociationSet>
           <AssociationSet Name="FL_JOB" Association="Self.FL_JOB">
             <End Role="NounsDefinitions" EntitySet="NounsDefinitions" />
             <End Role="Nouns" EntitySet="Nouns" />
@@ -89,6 +118,13 @@ warning 6013: The table/view 'Under33_Prod.dbo.VerbsDefintion' does not have a p
           <Property Name="RawVerb" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="OriginalVerb" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="DefinitionID" Type="Int32" />
+          <Property Name="Infinitiv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InfinitivLung" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gerunziu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Participiu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ImperativSingular" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ImperativPlural" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TimpuriVerbales" Relationship="Under33_ProdModel.FK_TimpuriVerbales_Verbs" FromRole="Verb" ToRole="TimpuriVerbale" />
         </EntityType>
         <Association Name="FL_JOB">
           <End Role="NounsDefinitions" Type="Self.NounsDefinition" Multiplicity="0..1" />
@@ -110,7 +146,39 @@ warning 6013: The table/view 'Under33_Prod.dbo.VerbsDefintion' does not have a p
             <End Role="NounsDefinitions" EntitySet="NounsDefinitions" />
             <End Role="Nouns" EntitySet="Nouns" />
           </AssociationSet>
+          <EntitySet Name="TimpuriVerbales" EntityType="Under33_ProdModel.TimpuriVerbale" />
+          <AssociationSet Name="FK_TimpuriVerbales_Verbs" Association="Under33_ProdModel.FK_TimpuriVerbales_Verbs">
+            <End Role="Verb" EntitySet="Verbs" />
+            <End Role="TimpuriVerbale" EntitySet="TimpuriVerbales" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="TimpuriVerbale">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TimpID" Type="Int32" />
+          <Property Name="Eu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ea" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Noi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Voi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ele" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VerbID" Type="Int32" />
+          <NavigationProperty Name="Verb" Relationship="Under33_ProdModel.FK_TimpuriVerbales_Verbs" FromRole="TimpuriVerbale" ToRole="Verb" />
+        </EntityType>
+        <Association Name="FK_TimpuriVerbales_Verbs">
+          <End Type="Under33_ProdModel.Verb" Role="Verb" Multiplicity="0..1" />
+          <End Type="Under33_ProdModel.TimpuriVerbale" Role="TimpuriVerbale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Verb">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TimpuriVerbale">
+              <PropertyRef Name="VerbID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -137,11 +205,32 @@ warning 6013: The table/view 'Under33_Prod.dbo.VerbsDefintion' does not have a p
           <EntitySetMapping Name="Verbs">
             <EntityTypeMapping TypeName="Under33_ProdModel.Verb">
               <MappingFragment StoreEntitySet="Verbs">
+                <ScalarProperty Name="ImperativPlural" ColumnName="ImperativPlural" />
+                <ScalarProperty Name="ImperativSingular" ColumnName="ImperativSingular" />
+                <ScalarProperty Name="Participiu" ColumnName="Participiu" />
+                <ScalarProperty Name="Gerunziu" ColumnName="Gerunziu" />
+                <ScalarProperty Name="InfinitivLung" ColumnName="InfinitivLung" />
+                <ScalarProperty Name="Infinitiv" ColumnName="Infinitiv" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="OriginalID" ColumnName="OriginalID" />
                 <ScalarProperty Name="RawVerb" ColumnName="RawVerb" />
                 <ScalarProperty Name="OriginalVerb" ColumnName="OriginalVerb" />
                 <ScalarProperty Name="DefinitionID" ColumnName="DefinitionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimpuriVerbales">
+            <EntityTypeMapping TypeName="Under33_ProdModel.TimpuriVerbale">
+              <MappingFragment StoreEntitySet="TimpuriVerbales">
+                <ScalarProperty Name="VerbID" ColumnName="VerbID" />
+                <ScalarProperty Name="Ele" ColumnName="Ele" />
+                <ScalarProperty Name="Voi" ColumnName="Voi" />
+                <ScalarProperty Name="Noi" ColumnName="Noi" />
+                <ScalarProperty Name="Ea" ColumnName="Ea" />
+                <ScalarProperty Name="Tu" ColumnName="Tu" />
+                <ScalarProperty Name="Eu" ColumnName="Eu" />
+                <ScalarProperty Name="TimpID" ColumnName="TimpID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

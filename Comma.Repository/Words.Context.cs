@@ -28,5 +28,6 @@ namespace Comma.Repository
         public virtual DbSet<Noun> Nouns { get; set; }
         public virtual DbSet<NounsDefinition> NounsDefinitions { get; set; }
         public virtual DbSet<Verb> Verbs { get; set; }
+        public virtual DbSet<TimpuriVerbale> TimpuriVerbales { get; set; }
     }
 }

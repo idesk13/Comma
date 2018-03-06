@@ -7,8 +7,10 @@
       <Diagram DiagramId="db324f40733143869050c5e6491af145" Name="Diagram1">
         <EntityTypeShape EntityType="Under33_ProdModel.Noun" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Under33_ProdModel.NounsDefinition" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="Under33_ProdModel.Verb" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Under33_ProdModel.Verb" Width="1.5" PointX="4.375" PointY="3.5" IsExpanded="true" />
         <AssociationConnector Association="Under33_ProdModel.FL_JOB" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Under33_ProdModel.TimpuriVerbale" Width="1.5" PointX="7.25" PointY="3.625" />
+        <AssociationConnector Association="Under33_ProdModel.FK_TimpuriVerbales_Verbs" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

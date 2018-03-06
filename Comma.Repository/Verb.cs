@@ -14,10 +14,25 @@ namespace Comma.Repository
     
     public partial class Verb
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Verb()
+        {
+            this.TimpuriVerbales = new HashSet<TimpuriVerbale>();
+        }
+    
         public int ID { get; set; }
         public Nullable<int> OriginalID { get; set; }
         public string RawVerb { get; set; }
         public string OriginalVerb { get; set; }
         public Nullable<int> DefinitionID { get; set; }
+        public string Infinitiv { get; set; }
+        public string InfinitivLung { get; set; }
+        public string Gerunziu { get; set; }
+        public string Participiu { get; set; }
+        public string ImperativSingular { get; set; }
+        public string ImperativPlural { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TimpuriVerbale> TimpuriVerbales { get; set; }
     }
 }
