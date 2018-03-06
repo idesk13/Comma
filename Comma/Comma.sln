@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2026
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comma.UI", "Comma.UI.csproj", "{B73630FD-8D52-4185-8358-3D969276CC10}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comma.Repository", "..\Comma.Repository\Comma.Repository.csproj", "{5FB4E1AD-8DBD-4058-A1BE-5BAC550AAF2E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comma.External", "..\Comma.External\Comma.External.csproj", "{0436B18A-9787-48F7-A6C7-F75C373BEE04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comma.DomainEnitites", "..\Comma.DomainEnitites\Comma.DomainEnitites.csproj", "{4CBDD585-2B18-4FA2-BA65-E394C34FFA4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{0436B18A-9787-48F7-A6C7-F75C373BEE04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0436B18A-9787-48F7-A6C7-F75C373BEE04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0436B18A-9787-48F7-A6C7-F75C373BEE04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CBDD585-2B18-4FA2-BA65-E394C34FFA4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CBDD585-2B18-4FA2-BA65-E394C34FFA4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CBDD585-2B18-4FA2-BA65-E394C34FFA4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CBDD585-2B18-4FA2-BA65-E394C34FFA4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Comma.DomainEnitites;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Comma.UnitTests
 {
@@ -12,6 +13,15 @@ namespace Comma.UnitTests
             string input = "Ana are mere";
 
             Assert.AreEqual("Ana", subject);
+        }
+
+        [TestMethod]
+        public void TestConditionalPerfectPersoanaADouaPlural()
+        {
+            var conjugare = Conjugare.MakeIndicativViitor(PersoanaEnum.ATreia, NumarEnum.Plural
+                , new Verb { Radacina = "vedea", Terminatie = "" });
+
+            Assert.AreEqual(conjugare.ToString(), "Ei/Ele vor vedea");
         }
     }
 }
