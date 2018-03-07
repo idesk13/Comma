@@ -108,5 +108,15 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Comma.DomainEnitites\Comma.DomainEnitites.csproj">
+      <Project>{4CBDD585-2B18-4FA2-BA65-E394C34FFA4E}</Project>
+      <Name>Comma.DomainEnitites</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Comma.External\Comma.External.csproj">
+      <Project>{0436B18A-9787-48F7-A6C7-F75C373BEE04}</Project>
+      <Name>Comma.External</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

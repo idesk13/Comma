@@ -10,13 +10,13 @@
         <Label HorizontalAlignment="Left" Margin="23,20,0,0" VerticalAlignment="Top" Width="57" Height="28" Content="INFINTIV"/>
         <DataGrid Name="DgWords" AutoGenerateColumns="False" Margin="0,190,274,-10">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Timp}" Header="Timp"/>
-                <DataGridTextColumn Binding="{Binding EuComplete}" Header="Eu"/>
-                <DataGridTextColumn Binding="{Binding TuComplete}" Header="Tu"/>
-                <DataGridTextColumn Binding="{Binding EaComplete}" Header="Ea"/>
-                <DataGridTextColumn Binding="{Binding NoiComplete}" Header="Noi"/>
-                <DataGridTextColumn Binding="{Binding VoiComplete}" Header="Voi"/>
-                <DataGridTextColumn Binding="{Binding EleComplete}" Header="Ele"/>
+                <DataGridTextColumn Binding="{Binding TimpID}" Header="Timp"/>
+                <DataGridTextColumn Binding="{Binding Eu}" Header="Eu"/>
+                <DataGridTextColumn Binding="{Binding Tu}" Header="Tu"/>
+                <DataGridTextColumn Binding="{Binding Ea}" Header="Ea"/>
+                <DataGridTextColumn Binding="{Binding Noi}" Header="Noi"/>
+                <DataGridTextColumn Binding="{Binding Voi}" Header="Voi"/>
+                <DataGridTextColumn Binding="{Binding Ele}" Header="Ele"/>
             </DataGrid.Columns>
         </DataGrid>
         <Label HorizontalAlignment="Left" Margin="106,20,0,0" VerticalAlignment="Top" Width="193" Height="28" Content="{Binding Infinitiv}"/>

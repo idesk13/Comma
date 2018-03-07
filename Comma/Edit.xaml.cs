@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Comma.External;
+using Comma.Repository;
 
 namespace Comma
 {
@@ -23,11 +24,32 @@ namespace Comma
         public Edit(string verb )
         {
             InitializeComponent();
-
             ExternalProcesor externalProcesor = new ExternalProcesor();
-            var timpuri = externalProcesor.TimpVerbalComplet(verb);
-            this.DataContext = timpuri;
-            DgWords.ItemsSource = timpuri.TimpuriRegulate;
+
+            VerbRepository verbRepository = new VerbRepository();
+            var verbEntity = verbRepository.GetByName(verb);
+
+            if (string.IsNullOrEmpty(verbEntity.Infinitiv))
+            {
+                var timpuri = externalProcesor.TimpVerbalComplet(verb);
+
+                verbEntity.Infinitiv = timpuri.Infinitiv;
+                verbEntity.Gerunziu = timpuri.Gerunziu;
+                verbEntity.Participiu = timpuri.Participiu;
+                verbEntity.InfinitivLung = timpuri.InfinitivLung;
+                verbEntity.ImperativSingular = timpuri.ImperativSingular;
+                verbEntity.ImperativPlural = timpuri.ImperativPlural;
+
+                verbRepository.AddIntoContext(verbEntity);
+                verbRepository.UpdateTimpuriVerbale(timpuri.TimpuriRegulate, verbEntity.ID);
+               
+            }
+            this.DataContext = verbEntity;
+            DgWords.ItemsSource = verbRepository.GetTimpuriByVerbId(verbEntity.ID);
+
+
+            verbRepository.Commit();;
+            
         }
     }
 }
