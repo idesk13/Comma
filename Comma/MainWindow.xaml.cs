@@ -26,12 +26,17 @@ namespace Comma
             sqlite = new SQLiteConnection(@"DataSource = C:\Program Files (x86)\Octavian Rasnita\Maestro DEX 3\dexDb.sqlite;Version=3;");
            
             var words = SelectQuery("Select  * from definition where definition like '%#vb.#%'");
-            var list = new List<Word>();
+            _verbRepository = new VerbRepository();
             int emptyVerbs = 0;
             int NotemptyVerbs = 0;
 
+            UpdateGrid();
+        }
 
-            _verbRepository = new VerbRepository();
+        private void UpdateGrid()
+        {
+            var list = new List<Word>();
+           
 
             var allVerbs = _verbRepository.GetAllVerbs();
 
@@ -59,12 +64,6 @@ namespace Comma
             ).ToList();
 
             DgWords.ItemsSource = listdd;
-            this.DataContext = new MainModel()
-            {
-                EmptyWords = emptyVerbs + "-------" + listdd.Count
-
-            };
-
         }
 
         public static void DistinctValues<T>(List<T> list)
@@ -99,19 +98,6 @@ namespace Comma
             return input;
         }
 
-        private async void PRocess(Word word)
-        {
-            var verb = new Verb
-            {
-                OriginalID = word.ID,
-                OriginalVerb = word.Verb,
-                RawVerb = word.Original
-            };
-            _verbRepository.AddIntoContext(verb);
-
-            _verbRepository.Commit();
-
-        }
 
         static string RemoveDiacritics(string text)
         {
@@ -194,7 +180,6 @@ namespace Comma
         private void SyncButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             Word customer = (Word)DgWords.SelectedItem;
-            PRocess(customer);
 
             MessageBox.Show($"{customer.Verb} saved into DB");
         }
@@ -204,6 +189,14 @@ namespace Comma
             Word customer = (Word)DgWords.SelectedItem;
             Edit editVerb = new Edit(customer.Verb);
             editVerb.Show();
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            Word customer = (Word)DgWords.SelectedItem;
+            VerbRepository vp = new VerbRepository();
+            vp.DeletVerb(customer.ID);
+            UpdateGrid();
         }
     }
 

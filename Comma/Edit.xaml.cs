@@ -24,32 +24,13 @@ namespace Comma
         public Edit(string verb )
         {
             InitializeComponent();
-            ExternalProcesor externalProcesor = new ExternalProcesor();
 
             VerbRepository verbRepository = new VerbRepository();
-            var verbEntity = verbRepository.GetByName(verb);
+            var verbEntity = verbRepository.GetByName(verb, true);
 
-            if (string.IsNullOrEmpty(verbEntity.Infinitiv))
-            {
-                var timpuri = externalProcesor.TimpVerbalComplet(verb);
-
-                verbEntity.Infinitiv = timpuri.Infinitiv;
-                verbEntity.Gerunziu = timpuri.Gerunziu;
-                verbEntity.Participiu = timpuri.Participiu;
-                verbEntity.InfinitivLung = timpuri.InfinitivLung;
-                verbEntity.ImperativSingular = timpuri.ImperativSingular;
-                verbEntity.ImperativPlural = timpuri.ImperativPlural;
-
-                verbRepository.AddIntoContext(verbEntity);
-                verbRepository.UpdateTimpuriVerbale(timpuri.TimpuriRegulate, verbEntity.ID);
-               
-            }
             this.DataContext = verbEntity;
-            DgWords.ItemsSource = verbRepository.GetTimpuriByVerbId(verbEntity.ID);
+            DgWords.ItemsSource = verbEntity.TimpuriVerbales;
 
-
-            verbRepository.Commit();;
-            
         }
     }
 }

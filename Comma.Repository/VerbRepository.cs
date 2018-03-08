@@ -20,6 +20,11 @@ namespace Comma.Repository
             return WordsContext.Verbs.ToList();
         }
 
+        public Verb GetVerbById(int verbId)
+        {
+            return WordsContext.Verbs.FirstOrDefault(x => x.ID == verbId);
+        }
+
         public void Commit()
         {
             WordsContext.SaveChanges();
@@ -30,15 +35,40 @@ namespace Comma.Repository
             return WordsContext.Verbs.FirstOrDefault(x => x.RawVerb == verb);
         }
 
-        public void UpdateTimpuriVerbale(List<TimpVerbal> timpuriTimpuriRegulate, int verbEntityId)
+        public Verb GetByName(string verb, bool includeTimpuri)
         {
-            foreach (var timpRegulat in timpuriTimpuriRegulate)
+            var vb = WordsContext.Verbs.FirstOrDefault(x => x.RawVerb == verb);
+
+            if (includeTimpuri)
+            {
+                if (vb != null)
+                {
+                    var timpuriVerble = GetTimpuriByVerbId(vb.ID);
+
+                    if (timpuriVerble == null || timpuriVerble.Count == 0)
+                    {
+                        UpdateTimpuriVerbale(vb);
+                    }
+                }
+
+            }
+
+            return vb;
+
+        }
+
+        public void UpdateTimpuriVerbale(Verb vb)
+        {
+            ExternalProcesor externalProcesor = new ExternalProcesor();
+
+            var timpuriTimpuriRegulate = externalProcesor.TimpVerbalComplet(vb.OriginalVerb);
+            foreach (var timpRegulat in timpuriTimpuriRegulate.TimpuriRegulate)
             {
                 TimpuriVerbale timpuriVerbale = new TimpuriVerbale()
                 {
                     Eu = timpRegulat.Eu,
                     Tu = timpRegulat.Tu,
-                    VerbID = verbEntityId,
+                    VerbID = vb.ID,
                     Ea = timpRegulat.Ea,
                     Ele = timpRegulat.Ele,
                     Noi = timpRegulat.Noi,
@@ -47,6 +77,7 @@ namespace Comma.Repository
                 };
 
                 WordsContext.TimpuriVerbales.AddOrUpdate(timpuriVerbale);
+                vb.TimpuriVerbales.Add(timpuriVerbale);
             }
 
             this.Commit();
@@ -123,6 +154,13 @@ namespace Comma.Repository
             var vbs = WordsContext.TimpuriVerbales.Where(x => x.VerbID == verbEntityId).ToList();
 
             return vbs;
+        }
+
+        public void DeletVerb(int customer)
+        {
+            var verb = GetVerbById(customer);
+            WordsContext.Verbs.Remove(verb);
+            Commit();
         }
     }
 }
