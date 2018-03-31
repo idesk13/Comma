@@ -129,6 +129,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Comma.BusinessLogic\Comma.BusinessLogic.csproj">
+      <Project>{5e869113-6010-4677-a5c6-0c9e63245098}</Project>
+      <Name>Comma.BusinessLogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Comma.External\Comma.External.csproj">
       <Project>{0436B18A-9787-48F7-A6C7-F75C373BEE04}</Project>
       <Name>Comma.External</Name>

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity.Migrations;
+using System.Data.SQLite;
 using System.Linq;
 using Comma.DomainEnitites;
 using Comma.External;
@@ -18,6 +20,11 @@ namespace Comma.Repository
         public List<Verb> GetAllVerbs()
         {
             return WordsContext.Verbs.ToList();
+        }
+
+        public List<Verb> GetAllVerbsWithoutTimpuri()
+        {
+            return WordsContext.Verbs.Where(x=>x.AreTimpuri==false).ToList();
         }
 
         public Verb GetVerbById(int verbId)
@@ -37,7 +44,7 @@ namespace Comma.Repository
 
         public Verb GetByName(string verb, bool includeTimpuri)
         {
-            var vb = WordsContext.Verbs.FirstOrDefault(x => x.RawVerb == verb);
+            var vb = WordsContext.Verbs.FirstOrDefault(x => x.OriginalVerb == verb);
 
             if (includeTimpuri)
             {
@@ -59,9 +66,22 @@ namespace Comma.Repository
 
         public void UpdateTimpuriVerbale(Verb vb)
         {
+            if (vb.AreTimpuri != null && vb.AreTimpuri.Value) return;
+
             ExternalProcesor externalProcesor = new ExternalProcesor();
 
             var timpuriTimpuriRegulate = externalProcesor.TimpVerbalComplet(vb.OriginalVerb);
+
+            if (timpuriTimpuriRegulate==null) return;
+
+            vb.Infinitiv = timpuriTimpuriRegulate.Infinitiv;
+            vb.InfinitivLung = timpuriTimpuriRegulate.InfinitivLung;
+            vb.Gerunziu = timpuriTimpuriRegulate.Gerunziu;
+            vb.Participiu = timpuriTimpuriRegulate.Participiu;
+            vb.ImperativPlural = timpuriTimpuriRegulate.ImperativPlural;
+            vb.ImperativSingular = timpuriTimpuriRegulate.ImperativSingular;
+            vb.AreTimpuri = true;
+
             foreach (var timpRegulat in timpuriTimpuriRegulate.TimpuriRegulate)
             {
                 TimpuriVerbale timpuriVerbale = new TimpuriVerbale()
@@ -76,7 +96,7 @@ namespace Comma.Repository
                     TimpID = GetTimpId(timpRegulat.Timp)
                 };
 
-                WordsContext.TimpuriVerbales.AddOrUpdate(timpuriVerbale);
+                //WordsContext.TimpuriVerbales.AddOrUpdate(timpuriVerbale);
                 vb.TimpuriVerbales.Add(timpuriVerbale);
             }
 
@@ -161,6 +181,44 @@ namespace Comma.Repository
             var verb = GetVerbById(customer);
             WordsContext.Verbs.Remove(verb);
             Commit();
+        }
+
+        public IEnumerable<Verb> FilterVerbs(string searchTbText)
+        {
+            return WordsContext.Verbs.Where(x => x.OriginalVerb.Contains(searchTbText));
+        }
+    }
+
+    public class DexOnlineRepository
+    {
+        private readonly SQLiteConnection _sqlite;
+        public static string VerbsQuery = "Select* from definition where definition like '%#vb.#%'";
+        public static string SqlLiteLocation = @"C:\Program Files (x86)\Octavian Rasnita\Maestro DEX 3\dexDb.sqlite";
+
+        public DexOnlineRepository()
+        {
+            _sqlite = new SQLiteConnection($"DataSource = {SqlLiteLocation} ;Version=3;");
+        }
+
+        public DataTable ExecuteQuery(string query)
+        {
+            DataTable dt = new DataTable();
+
+            try
+            {
+                SQLiteCommand cmd;
+                _sqlite.Open();  //Initiate connection to the db
+                cmd = _sqlite.CreateCommand();
+                cmd.CommandText = query;  //set the passed query
+                var ad = new SQLiteDataAdapter(cmd);
+                ad.Fill(dt); //fill the datasource
+            }
+            catch (SQLiteException ex)
+            {
+                //Add your exception code here.
+            }
+            _sqlite.Close();
+            return dt;
         }
     }
 }

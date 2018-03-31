@@ -16,3 +16,16 @@
 /Comma/.vs/Comma/v14/.suo
 /Comma.DomainEnitites/obj/Debug
 /Comma.DomainEnitites/bin/Debug
+/Comma/obj/Release
+/Comma/.vs/config
+/Comma.Repository/bin/Release
+/Comma.Repository/obj/Release
+/Comma.UnitTests/obj/Release
+/Comma.DomainEnitites/obj/Release
+/Comma.DomainEnitites/bin/Release
+/Comma.BusinessLogic/obj
+/Comma.API/bin
+/Comma.API/obj
+/Comma.BusinessLogic/bin/Debug/netstandard2.0
+/Comma.External/bin/Release
+/Comma.External/obj/Release

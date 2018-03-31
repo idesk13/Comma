@@ -35,6 +35,7 @@
           <Property Name="Participiu" Type="nvarchar" MaxLength="50" />
           <Property Name="ImperativSingular" Type="nvarchar" MaxLength="50" />
           <Property Name="ImperativPlural" Type="nvarchar" MaxLength="50" />
+          <Property Name="AreTimpuri" Type="bit" />
         </EntityType>
         <EntityType Name="TimpuriVerbales">
           <Key>
@@ -125,6 +126,7 @@
           <Property Name="ImperativSingular" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ImperativPlural" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TimpuriVerbales" Relationship="Under33_ProdModel.FK_TimpuriVerbales_Verbs" FromRole="Verb" ToRole="TimpuriVerbale" />
+          <Property Name="AreTimpuri" Type="Boolean" />
         </EntityType>
         <Association Name="FL_JOB">
           <End Role="NounsDefinitions" Type="Self.NounsDefinition" Multiplicity="0..1" />
@@ -205,6 +207,7 @@
           <EntitySetMapping Name="Verbs">
             <EntityTypeMapping TypeName="Under33_ProdModel.Verb">
               <MappingFragment StoreEntitySet="Verbs">
+                <ScalarProperty Name="AreTimpuri" ColumnName="AreTimpuri" />
                 <ScalarProperty Name="ImperativPlural" ColumnName="ImperativPlural" />
                 <ScalarProperty Name="ImperativSingular" ColumnName="ImperativSingular" />
                 <ScalarProperty Name="Participiu" ColumnName="Participiu" />

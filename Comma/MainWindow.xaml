@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Comma"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="639.39">
-    <Grid HorizontalAlignment="Left" Margin="0,0,0,-0.2" Width="629">
-        <DataGrid Name="DgWords" AutoGenerateColumns="False" Margin="5,55,38.4,-0.2">
+        Title="MainWindow" Height="525.2" Width="914.59">
+    <Grid HorizontalAlignment="Left" Margin="0,30,0,19.2" Width="881">
+        <DataGrid Name="DgWords" AutoGenerateColumns="False" Margin="5,55,0,-1">
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
                     <Style.Triggers>
@@ -23,9 +23,10 @@
                 <DataGridTextColumn Binding="{Binding Original}" Header="Original"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Edit" HorizontalAlignment="Left" Margin="159,21,0,0" VerticalAlignment="Top" Width="134" Click="Button_Click"/>
-        <Button Content="Remove" HorizontalAlignment="Left" Margin="313,19,0,0" VerticalAlignment="Top" Width="134" Click="ButtonBase_OnClick"/>
+        <Button Content="Edit" HorizontalAlignment="Left" Margin="159,21,0,0" VerticalAlignment="Top" Width="134" Click="EditButton_Click"/>
+        <Button Content="Remove" HorizontalAlignment="Left" Margin="313,19,0,0" VerticalAlignment="Top" Width="134" Click="RemoveButton_Click" Height="23"/>
         <Button Content="New" HorizontalAlignment="Left" Margin="10,21,0,0" VerticalAlignment="Top" Width="134"/>
-        <Button Content="Sync" HorizontalAlignment="Left" Margin="452,19,-67.6,0" VerticalAlignment="Top" Width="134" Click="SyncButtonBase_OnClick"/>
+        <Button Content="Search" HorizontalAlignment="Left" Margin="702,19,0,0" VerticalAlignment="Top" Width="134" Click="SyncButton_Click" Height="23"/>
+        <TextBox Name="SearchTB" HorizontalAlignment="Left" Height="23" Margin="493,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="143"/>
     </Grid>
 </Window>

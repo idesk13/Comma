@@ -31,6 +31,7 @@ namespace Comma.Repository
         public string Participiu { get; set; }
         public string ImperativSingular { get; set; }
         public string ImperativPlural { get; set; }
+        public Nullable<bool> AreTimpuri { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TimpuriVerbale> TimpuriVerbales { get; set; }

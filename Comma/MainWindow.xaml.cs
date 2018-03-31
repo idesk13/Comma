@@ -1,48 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Data.SQLite;
-using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Windows.Input;
-using Comma.External;
 using Comma.Repository;
+using Comma.BusinessLogic;
 
 namespace Comma
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
-        private SQLiteConnection sqlite;
-
 
         private readonly VerbRepository _verbRepository;
+        private readonly DexOnlineRepository _dexOnlineRepository;
+
         public MainWindow()
         {
             InitializeComponent();
-            sqlite = new SQLiteConnection(@"DataSource = C:\Program Files (x86)\Octavian Rasnita\Maestro DEX 3\dexDb.sqlite;Version=3;");
-           
-            var words = SelectQuery("Select  * from definition where definition like '%#vb.#%'");
+
             _verbRepository = new VerbRepository();
-            int emptyVerbs = 0;
-            int NotemptyVerbs = 0;
+            _dexOnlineRepository = new DexOnlineRepository();
 
             UpdateGrid();
         }
 
-        private void UpdateGrid()
+        private void UpdateGrid(List<Verb> allVerbs = null)
         {
+            if (allVerbs == null)
+            {
+                allVerbs = _verbRepository.GetAllVerbs().OrderBy(x => x.OriginalVerb).ToList();
+            }
+
             var list = new List<Word>();
-           
-
-            var allVerbs = _verbRepository.GetAllVerbs();
-
+            
             foreach (var verb in allVerbs)
             {
-
+                _verbRepository.UpdateTimpuriVerbale(verb);
                 var word = new Word()
                 {
                     ID = verb.ID,
@@ -53,17 +46,7 @@ namespace Comma
                 list.Add(word);
             }
 
-
-            var listdd = list.OrderBy(x => x.Verb).Distinct().ToList();
-
-            listdd = (
-                from o in listdd
-                orderby o.Verb
-                group o by o.Verb into g
-                select g.First()
-            ).ToList();
-
-            DgWords.ItemsSource = listdd;
+            DgWords.ItemsSource = list;
         }
 
         public static void DistinctValues<T>(List<T> list)
@@ -86,38 +69,9 @@ namespace Comma
             }
         }
 
-        public string RemoveCharctaer(string input)
-        {
-
-            var charsToRemove = new string[] { "@", ",", "^", "1", "2", "3", "!", "*", " " };
-            foreach (var c in charsToRemove)
-            {
-                input = input.Replace(c, string.Empty);
-            }
-
-            return input;
-        }
-
-
-        static string RemoveDiacritics(string text)
-        {
-            var normalizedString = text.Normalize(NormalizationForm.FormD);
-            var stringBuilder = new StringBuilder();
-
-            foreach (var c in normalizedString)
-            {
-                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
-                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
-                {
-                    stringBuilder.Append(c);
-                }
-            }
-
-            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
-        }
-
         public string GetVerb(string input)
         {
+            input.RemoveDiacritis();
             Regex regex = new Regex($@"@([a-zA-Z() ó\-À-ÿȚ*ȘĂéấ!ăắẮIẤÎ́îíșț^1-9\s,~{{}}])*@");
             Match match = regex.Match(input);
 
@@ -152,57 +106,27 @@ namespace Comma
             }
         }
 
-
-        public DataTable SelectQuery(string query)
+        private void SyncButton_Click(object sender, RoutedEventArgs e)
         {
-            SQLiteDataAdapter ad;
-            DataTable dt = new DataTable();
+            var verbs = _verbRepository.FilterVerbs(SearchTB.Text).OrderBy(x => x.OriginalVerb).ToList();
 
-            try
-            {
-                SQLiteCommand cmd;
-                sqlite.Open();  //Initiate connection to the db
-                cmd = sqlite.CreateCommand();
-                cmd.CommandText = query;  //set the passed query
-                ad = new SQLiteDataAdapter(cmd);
-                ad.Fill(dt); //fill the datasource
-            }
-            catch (SQLiteException ex)
-            {
-                MessageBox.Show(ex.Message);
-                //Add your exception code here.
-            }
-            sqlite.Close();
-            return dt;
+            UpdateGrid(verbs);
         }
 
-
-        private void SyncButtonBase_OnClick(object sender, RoutedEventArgs e)
+        private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             Word customer = (Word)DgWords.SelectedItem;
-
-            MessageBox.Show($"{customer.Verb} saved into DB");
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Word customer = (Word)DgWords.SelectedItem;
-            Edit editVerb = new Edit(customer.Verb);
+            Edit editVerb = new Edit(customer.Original);
             editVerb.Show();
         }
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
             Word customer = (Word)DgWords.SelectedItem;
             VerbRepository vp = new VerbRepository();
             vp.DeletVerb(customer.ID);
             UpdateGrid();
         }
-    }
 
-    public class MainModel
-    {
-        private const string emptyWords = "Hello World";
-        public string EmptyWords { get; set; }
     }
 }

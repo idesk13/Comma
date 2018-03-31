@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
+using HtmlAgilityPack;
 using HtmlDocument = HtmlAgilityPack.HtmlDocument;
 
 namespace Comma.External
@@ -34,7 +35,21 @@ namespace Comma.External
             TimpVerbalComplet tvc = new TimpVerbalComplet();
             var doc = ParseHtml(verb);
             var list = new List<TimpVerbal>();
-            var nodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'box_conj')]");
+            HtmlNodeCollection nodes;
+            try
+            {
+              nodes  = doc.DocumentNode.SelectNodes("//div[contains(@class,'box_conj')]");
+
+                if (nodes == null)
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            
 
             foreach (var node in nodes)
             {
@@ -62,6 +77,11 @@ namespace Comma.External
                             pronumValue = pronumNode.InnerText;
                         }
 
+                        if (conjValue.SelectSingleNode("./text()") == null)
+                        {
+                            continue;
+                            
+                        }
                         var verbz = conjValue.SelectSingleNode("./text()").InnerText;
 
                         if (timpVerbalNume == Infintiv)
