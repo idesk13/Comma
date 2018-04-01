@@ -17,9 +17,27 @@ namespace Comma.API.Controllers
             return new string[] { "value1", "value2" };
         }
 
+        [HttpGet]
+        public IEnumerable<SimpleVerbApi> Cauta(string id)
+        {
+            VerbRepository verbRepository = new VerbRepository();
+
+            var verbs = verbRepository.FilterVerbs(id);
+
+            foreach (var verb in verbs)
+            {
+                var verbApi = new SimpleVerbApi();
+                verbApi.OriginalVerb = verb.OriginalVerb;
+                verbApi.RawVerb = verb.RawVerb;
+                
+                yield return verbApi;
+            }
+        }
+
         // GET api/values/5
         public VerbApi Get(string id)
         {
+            GlobalConfiguration.Configuration.Formatters.XmlFormatter.UseXmlSerializer = true;
             VerbRepository verbRepository = new VerbRepository();
             //return new string[] { id, id};
             var verb = verbRepository.GetByName(id, true);

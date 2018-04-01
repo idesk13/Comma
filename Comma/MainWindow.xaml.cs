@@ -28,7 +28,7 @@ namespace Comma
         {
             if (allVerbs == null)
             {
-                allVerbs = _verbRepository.GetAllVerbs().OrderBy(x => x.OriginalVerb).ToList();
+                allVerbs = _verbRepository.GetAllVerbsWithoutTimpuri().OrderBy(x => x.OriginalVerb).ToList();
             }
 
             var list = new List<Word>();

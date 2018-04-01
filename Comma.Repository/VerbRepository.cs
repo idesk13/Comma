@@ -96,7 +96,6 @@ namespace Comma.Repository
                     TimpID = GetTimpId(timpRegulat.Timp)
                 };
 
-                //WordsContext.TimpuriVerbales.AddOrUpdate(timpuriVerbale);
                 vb.TimpuriVerbales.Add(timpuriVerbale);
             }
 

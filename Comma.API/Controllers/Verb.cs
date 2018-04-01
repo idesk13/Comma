@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Xml;
+using System.Xml.Serialization;
 
 namespace Comma.API.Controllers
 {
@@ -10,13 +10,14 @@ namespace Comma.API.Controllers
     public class VerbApi
     {
         [DataMember]
-        public string Participiu { get; set; }
-        [DataMember]
-        public string Gerunziu { get; set; }
-        [DataMember]
         public string Infinitiv { get; set; }
         [DataMember]
         public string InfinitivLung { get; set; }
+        [DataMember]
+        public string Participiu { get; set; }
+        [DataMember]
+        public string Gerunziu { get; set; }
+
         [DataMember]
         public string ImperativSingular { get; set; }
         [DataMember]
@@ -27,9 +28,21 @@ namespace Comma.API.Controllers
 
     [Serializable]
     [DataContract]
+    public class SimpleVerbApi
+    {
+        [DataMember]
+        public string OriginalVerb { get; set; }
+        [DataMember]
+        public string RawVerb { get; set; }
+
+    }
+
+    [Serializable]
+    [DataContract(Name = "TimpVerbal")]
     public class TimpVerbalApi
     {
         [DataMember]
+        [XmlAttribute(AttributeName = "Nume")]
         public string TimpVerbal { get; set; }
         [DataMember(Name = "Eu")]
         public string Eu { get; set; }
